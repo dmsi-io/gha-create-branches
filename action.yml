@@ -11,9 +11,9 @@ runs:
   using: 'composite'
   steps: 
     - run: |
-        IFS=', ' read -r -a array <<< ${{ inputs.repos }}
-        for element in "${array[@]}"
+        IFS=', ' read -r -a array <<< "${{ inputs.repos }}"
+        for index in "${!array[@]}"
         do
-            echo "$element"
+            echo "$index ${array[index]}"
         done
       shell: bash
