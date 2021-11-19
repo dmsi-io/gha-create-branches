@@ -2,8 +2,8 @@ name: 'Create Dependency Branches'
 description: 'Create same branch in dependency repos to spin up that service in k8s.'
 
 inputs:
-  repos:
-    description: 'Repositories to create branch on'
+  repo:
+    description: 'Repository to create branch on'
     default: ''
     required: false
   org:
@@ -21,30 +21,16 @@ runs:
   using: 'composite'
   steps: 
 
-    - run: |
-        echo "Using org: ${{ inputs.org }}"
-
-        IFS=', ' read -r -a REPOS <<< "${{ inputs.repos }}"
-
-        for REPO in "${REPOS[@]}"
-        do
-            echo "$REPO"
-            echo "Cloning git@github.com:${{ inputs.org }}/$REPO.git"
-        done
-
-        echo "REPOS=$REPOS" >> $GITHUB_ENV
-      shell: bash
-
     - run: git config --global url."https://${{ inputs.username }}:${{ inputs.token }}@github.com".insteadOf "https://github.com"
       shell: bash
 
     - uses: actions/checkout@v2
       with: 
-        repository: ${{ inputs.org }}/${REPOS[0]}
-        path: ${REPOS[0]}
+        repository: ${{ inputs.org }}/${{ inputs.repo }}
+        path: ${{ inputs.repo }}
 
     - run: |
         ls -al
-        cd ${REPOS[0]}
+        cd ${{ inputs.repo }}
         ls -al
       shell: bash
