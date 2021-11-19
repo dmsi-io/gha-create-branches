@@ -1,0 +1,14 @@
+name: Test gha-create-branches
+
+on:
+  - push
+
+jobs: 
+  test-gha-create-branches:
+    runs-on: ubuntu-latest
+    name: Test gha-create-branches
+    steps:
+      - name: Create Branches
+        uses: dmsi-io/gha-create-branches
+        with:
+          repos: k8s-ingress, k8s-redis, graphql-api

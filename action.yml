@@ -1,0 +1,19 @@
+name: 'Create Dependency Branches'
+description: 'Create same branch in dependency repos to spin up that service in k8s.'
+
+inputs:
+  repos:
+    description: 'Repositories to create branch on'
+    default: ''
+    required: false
+
+runs:
+  using: 'composite'
+  steps: 
+    - run: |
+        IFS=', ' read -r -a array <<< ${{ inputs.repos }}
+        for element in "${array[@]}"
+        do
+            echo "$element"
+        done
+      shell: bash
