@@ -15,8 +15,9 @@ runs:
   using: 'composite'
   steps: 
     - run: |
-        gh auth login
-        git config --global url."https://nathanHotz:${TOKEN}@github.com".insteadOf "https://github.com"
+        gh auth status
+        git config --global url."https://nathanHotz:${TOKEN}@github.com".insteadOf "https://github.com"\
+        gh config set git_protocol ssh --host github.com
       shell: bash
 
     - run: |
@@ -27,8 +28,8 @@ runs:
         for REPO in "${REPOS[@]}"
         do
             echo "$REPO"
-            echo "Cloning git@github.com:${{ inputs.org }}/$REPO.git"
-            gh repo clone ${{ inputs.org }}/$REPO.git
+            echo "Cloning git@github.com:${{ inputs.org }}/$REPO"
+            gh repo clone ${{ inputs.org }}/$REPO
             git branch -r
         done
       shell: bash
