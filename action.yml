@@ -29,6 +29,9 @@ runs:
         echo "REPOS=$REPOS" >> $GITHUB_ENV
       shell: bash
 
+    - run: git config --global url."https://nathanHotz:${{ secrets.GO_MODULES_TOKEN }}@github.com".insteadOf "https://github.com"
+      shell: bash
+
     - uses: actions/checkout@v2
       with: 
         repository: ${{ inputs.org }}/${REPOS[0]}
