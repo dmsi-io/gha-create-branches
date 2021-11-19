@@ -14,11 +14,6 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - run: |
-        gh auth status
-        git config --global url."https://nathanHotz:${TOKEN}@github.com".insteadOf "https://github.com"\
-        gh config set git_protocol ssh --host github.com
-      shell: bash
 
     - run: |
         echo "Using org: ${{ inputs.org }}"
@@ -28,8 +23,19 @@ runs:
         for REPO in "${REPOS[@]}"
         do
             echo "$REPO"
-            echo "Cloning git@github.com:${{ inputs.org }}/$REPO"
-            gh repo clone ${{ inputs.org }}/$REPO
-            git branch -r
+            echo "Cloning git@github.com:${{ inputs.org }}/$REPO.git"
         done
+
+        echo "REPOS=$REPOS" >> $GITHUB_ENV
+      shell: bash
+
+    - uses: actions/checkout@v2
+      with: 
+        repository: ${{ inputs.org }}/${REPOS[0]}
+        path: ${REPOS[0]}
+
+    - run: |
+        ls -al
+        cd ${REPOS[0]}
+        ls -al
       shell: bash
