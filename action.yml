@@ -14,7 +14,7 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - run: gh config set git_protocol ssh
+    - run: git config --global url."https://nathanHotz:${TOKEN}@github.com".insteadOf "https://github.com"
       shell: bash
 
     - run: |
