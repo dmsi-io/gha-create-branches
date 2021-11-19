@@ -6,7 +6,7 @@ on:
 jobs: 
   test-gha-create-branches:
     runs-on: ubuntu-latest
-    name: Test gha-create-branches on ${{ matrix.arch }}
+    name: Test gha-create-branches on ${{ matrix.repo }}
     strategy:
       matrix:
         repo: ['k8s-ingress', 'k8s-redis', 'graphql-api',]
@@ -14,6 +14,6 @@ jobs:
       - name: Create Branches
         uses: dmsi-io/gha-create-branches@main
         with:
-          repo: ${{ matrix.arch }}
+          repo: ${{ matrix.repo }}
           token: ${{ secrets.GO_MODULES_TOKEN }}
           username: ${{ secrets.GHA_PAT_USERNAME }}
