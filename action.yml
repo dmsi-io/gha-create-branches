@@ -21,9 +21,6 @@ runs:
   using: 'composite'
   steps: 
 
-    # - run: git config --global url."https://${{ inputs.username }}:${{ inputs.token }}@github.com".insteadOf "https://github.com"
-    #   shell: bash
-
     - uses: actions/checkout@v2
       with: 
         repository: ${{ inputs.org }}/${{ inputs.repo }}
