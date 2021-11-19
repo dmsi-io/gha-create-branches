@@ -9,6 +9,6 @@ jobs:
     name: Test gha-create-branches
     steps:
       - name: Create Branches
-        uses: dmsi-io/gha-create-branches
+        uses: dmsi-io/gha-create-branches@main
         with:
           repos: k8s-ingress, k8s-redis, graphql-api
