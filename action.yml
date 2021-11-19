@@ -14,11 +14,14 @@ inputs:
 runs:
   using: 'composite'
   steps: 
+    - run: gh config set git_protocol ssh
+      shell: bash
+
     - run: |
         echo "Using org: ${{ inputs.org }}"
 
         IFS=', ' read -r -a REPOS <<< "${{ inputs.repos }}"
-        
+
         for REPO in "${REPOS[@]}"
         do
             echo "$REPO"
