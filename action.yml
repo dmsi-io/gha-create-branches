@@ -10,6 +10,12 @@ inputs:
     description: 'Organization or user to manage repos under'
     default: 'dmsi-io'
     required: false
+  token: 
+    description: 'Personal Access Token (PAT)'
+    required: true
+  username: 
+    description: 'Username that the PAT belongs to.'
+    required: true
 
 runs:
   using: 'composite'
@@ -29,7 +35,7 @@ runs:
         echo "REPOS=$REPOS" >> $GITHUB_ENV
       shell: bash
 
-    - run: git config --global url."https://nathanHotz:${{ secrets.GO_MODULES_TOKEN }}@github.com".insteadOf "https://github.com"
+    - run: git config --global url."https://${{ inputs.username }}:${{ inputs.token }}@github.com".insteadOf "https://github.com"
       shell: bash
 
     - uses: actions/checkout@v2

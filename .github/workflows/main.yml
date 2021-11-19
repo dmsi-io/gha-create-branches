@@ -12,3 +12,5 @@ jobs:
         uses: dmsi-io/gha-create-branches@main
         with:
           repos: k8s-ingress, k8s-redis, graphql-api
+          token: ${{ secrets.GO_MODULES_TOKEN }}
+          username: ${{ secrets.GHA_PAT_USERNAME }}
