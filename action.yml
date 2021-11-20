@@ -18,12 +18,12 @@ runs:
   steps:
     - run: |
         echo 'export ORGANIZATION=$(if [[ ! -z ${{ inputs.org }} ]] ; then echo ${{ inputs.org }} ; else echo ${{ github.repository_owner }} ; fi)' >> $GITHUB_ENV
-        echo $ORGANIZATION
+        echo "$ORGANIZATION"
       shell: bash
 
     - uses: actions/checkout@v2
       with:
-        repository: $ORGANIZATION/${{ inputs.repo }}
+        repository: '$ORGANIZATION/${{ inputs.repo }}'
         path: ${{ inputs.repo }}
         token: ${{ inputs.token }}
 
