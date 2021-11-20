@@ -35,8 +35,6 @@ runs:
     - run: |
         echo "--- BRANCHES ---"
         git branch -a 
-        echo "--- GREP FOR CURRENT BRANCH ---"
-        git branch -a | grep ${{ github.ref_name }}
 
         echo "--- CHECKING CURRENT BRANCH EXISTS ---"
         if git branch -a | grep ${{ github.ref_name }}; then
