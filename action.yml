@@ -7,7 +7,7 @@ inputs:
     required: true
   org:
     description: 'Organization or user to manage repos under'
-    default: ''
+    default: ${{ github.repository_owner }}
     required: false
   token:
     description: 'Personal Access Token (PAT)'
@@ -16,14 +16,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: |
-        echo 'export ORGANIZATION=$(if [[ ! -z ${{ inputs.org }} ]] ; then echo ${{ inputs.org }} ; else echo ${{ github.repository_owner }} ; fi)' >> $GITHUB_ENV
-        echo "$ORGANIZATION"
-      shell: bash
-
     - uses: actions/checkout@v2
       with:
-        repository: '$ORGANIZATION/${{ inputs.repo }}'
+        repository: ${{ inputs.org }}/${{ inputs.repo }}
         path: ${{ inputs.repo }}
         token: ${{ inputs.token }}
 
