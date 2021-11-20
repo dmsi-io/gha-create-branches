@@ -23,18 +23,29 @@ runs:
         token: ${{ inputs.token }}
 
     - run: |
+        echo "--- TOP LEVEL ---"
         ls -al
+
         cd ${{ inputs.repo }}
+
+        echo "--- INSIDE REPO ---"
+        ls -al
+      shell: bash
+
+    - run: |
+        echo "--- BRANCHES ---"
         git branch -a 
+        echo "--- GREP FOR CURRENT BRANCH ---"
         git branch -a | grep ${{ github.ref_name }}
 
+        echo "--- CHECKING CURRENT BRANCH EXISTS ---"
         if git branch -a | grep ${{ github.ref_name }}; then
           echo "found match of ${{ github.ref_name }}"
         fi 
 
+        echo "--- CHECKING CURRENT BRANCH DOES NOT EXIST ---"
         if ! git branch -a | grep ${{ github.ref_name }}; then
           echo "did not find match of ${{ github.ref_name }}" 
-        fi 
-
-        ls -al
+        fi
       shell: bash
+      working-directory: ${{ inputs.repo }}
