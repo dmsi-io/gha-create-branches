@@ -4,31 +4,42 @@ description: 'Create same branch in dependency repos to spin up that service in 
 inputs:
   repo:
     description: 'Repository to create branch on'
-    default: ''
-    required: false
+    required: true
   org:
     description: 'Organization or user to manage repos under'
-    default: 'dmsi-io'
+    default: ''
     required: false
-  token: 
+  token:
     description: 'Personal Access Token (PAT)'
-    required: true
-  username: 
-    description: 'Username that the PAT belongs to.'
     required: true
 
 runs:
   using: 'composite'
-  steps: 
+  steps:
+    - run: |
+        echo 'export ORGANIZATION=$(if [[ ! -z ${{ inputs.org }} ]] ; then echo ${{ inputs.org }} ; else echo ${{ github.repository_owner }} ; fi)' >> $GITHUB_ENV
+        echo $ORGANIZATION
+      shell: bash
 
     - uses: actions/checkout@v2
-      with: 
-        repository: ${{ inputs.org }}/${{ inputs.repo }}
+      with:
+        repository: $ORGANIZATION/${{ inputs.repo }}
         path: ${{ inputs.repo }}
         token: ${{ inputs.token }}
 
     - run: |
         ls -al
         cd ${{ inputs.repo }}
+        git branch -a 
+        git branch -a | grep ${{ github.ref_name }}
+
+        if git branch -a | grep ${{ github.ref_name }}; then
+          echo "found match of ${{ github.ref_name }}"
+        fi 
+
+        if ! git branch -a | grep ${{ github.ref_name }}; then
+          echo "did not find match of ${{ github.ref_name }}" 
+        fi 
+
         ls -al
       shell: bash
