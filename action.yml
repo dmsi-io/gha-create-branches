@@ -21,6 +21,7 @@ runs:
         repository: ${{ inputs.org }}/${{ inputs.repo }}
         path: ${{ inputs.repo }}
         token: ${{ inputs.token }}
+        fetch-depth: 0
 
     - run: |
         echo "--- TOP LEVEL ---"
