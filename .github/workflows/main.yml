@@ -15,4 +15,4 @@ jobs:
         uses: dmsi-io/gha-create-branches@testing
         with:
           repo: ${{ matrix.repo }}
-          token: ${{ secrets.GO_MODULES_TOKEN }}
+          token: ${{ secrets.GHA_ACCESS_TOKEN }}
