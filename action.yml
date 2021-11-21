@@ -24,27 +24,18 @@ runs:
         fetch-depth: 0
 
     - run: |
-        echo "--- TOP LEVEL ---"
-        ls -al
-
-        cd ${{ inputs.repo }}
-
-        echo "--- INSIDE REPO ---"
-        ls -al
-      shell: bash
-
-    - run: |
         echo "--- BRANCHES ---"
         git branch -a 
 
-        echo "--- CHECKING CURRENT BRANCH EXISTS ---"
+        echo "--- CHECKING CURRENT BRANCH EXISTS ---" 
         if git branch -a | grep ${{ github.ref_name }}; then
-          echo "found match of ${{ github.ref_name }}"
-        fi 
-
-        echo "--- CHECKING CURRENT BRANCH DOES NOT EXIST ---"
-        if ! git branch -a | grep ${{ github.ref_name }}; then
+          echo "found match of ${{ github.ref_name }}, exiting..."
+        else
           echo "did not find match of ${{ github.ref_name }}" 
+
+          echo "creating branch ${{ github.ref_name }} in ${{ inputs.org }}/${{ inputs.repo }}..."
+          git checkout -b ${{ github.ref_name }}
+          git push origin ${{ github.ref_name }}:${{ github.ref_name }}
         fi
       shell: bash
       working-directory: ${{ inputs.repo }}

@@ -9,10 +9,10 @@ jobs:
     name: Test gha-create-branches on ${{ matrix.repo }}
     strategy:
       matrix:
-        repo: ['k8s-ingress', 'k8s-redis', 'viewers-api']
+        repo: ['k8s-ingress', 'k8s-redis']
     steps:
       - name: Create Branches
-        uses: dmsi-io/gha-create-branches@main
+        uses: dmsi-io/gha-create-branches@testing
         with:
           repo: ${{ matrix.repo }}
-          token: ${{ secrets.GO_MODULES_TOKEN }}
+          token: ${{ secrets.GHA_ACCESS_TOKEN }}
