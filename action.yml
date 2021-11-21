@@ -29,11 +29,11 @@ runs:
 
         echo "--- CHECKING CURRENT BRANCH EXISTS ---" 
         if git branch -a | grep ${{ github.ref_name }}; then
-          echo "found match of ${{ github.ref_name }}"
+          echo "found match of ${{ github.ref_name }}, exiting..."
         else
           echo "did not find match of ${{ github.ref_name }}" 
 
-          echo "creating branch ${{ github.ref_name }} in ${{ inputs.org }}/${{ inputs.repo }}"
+          echo "creating branch ${{ github.ref_name }} in ${{ inputs.org }}/${{ inputs.repo }}..."
           git checkout -b ${{ github.ref_name }}
           git push origin ${{ github.ref_name }}:${{ github.ref_name }}
         fi
