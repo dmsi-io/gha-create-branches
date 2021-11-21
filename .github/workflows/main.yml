@@ -12,7 +12,7 @@ jobs:
         repo: ['k8s-ingress', 'k8s-redis', 'viewers-api']
     steps:
       - name: Create Branches
-        uses: dmsi-io/gha-create-branches@main
+        uses: dmsi-io/gha-create-branches@testing
         with:
           repo: ${{ matrix.repo }}
           token: ${{ secrets.GO_MODULES_TOKEN }}
