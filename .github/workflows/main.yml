@@ -1,7 +1,9 @@
 name: Test gha-create-branches
 
 on:
-  - push
+  push:
+    branches:
+      - '!main'
 
 jobs:
   test-gha-create-branches:
@@ -12,7 +14,7 @@ jobs:
         repo: ['k8s-ingress', 'k8s-redis']
     steps:
       - name: Create Branches
-        uses: dmsi-io/gha-create-branches@testing
+        uses: dmsi-io/gha-create-branches@main
         with:
           repo: ${{ matrix.repo }}
           token: ${{ secrets.GHA_ACCESS_TOKEN }}

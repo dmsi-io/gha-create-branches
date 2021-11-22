@@ -15,7 +15,7 @@ on:
   - create
 
 jobs:
-  -create-branches:
+  create-branches:
     runs-on: ubuntu-latest
     name: Create branch on ${{ matrix.repo }}
     strategy:
