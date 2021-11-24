@@ -18,6 +18,8 @@ jobs:
   create-branches:
     runs-on: ubuntu-latest
     name: Create branch on ${{ matrix.repo }}
+    # limits trigger to only branches, skipping tags
+    if: github.ref_type == 'branch'
     strategy:
       matrix:
         # Add all repos that this repo depends on to run in kubernetes
@@ -28,4 +30,8 @@ jobs:
         with:
           repo: ${{ matrix.repo }}
           token: ${{ secrets.GHA_ACCESS_TOKEN }}
+        # avoids cyclical branch creations by skipping when author is bot account
+        env: 
+          GHA_ACCESS_USER: ${{ secrets.GHA_ACCESS_USER }}
+        if: github.actor != env.GHA_ACCESS_USER
 ```

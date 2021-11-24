@@ -9,6 +9,7 @@ jobs:
   test-gha-create-branches:
     runs-on: ubuntu-latest
     name: Test gha-create-branches on ${{ matrix.repo }}
+    if: github.ref_type == 'branch'
     strategy:
       matrix:
         repo: ['k8s-ingress', 'k8s-redis']
@@ -18,3 +19,6 @@ jobs:
         with:
           repo: ${{ matrix.repo }}
           token: ${{ secrets.GHA_ACCESS_TOKEN }}
+        env: 
+          GHA_ACCESS_USER: ${{ secrets.GHA_ACCESS_USER }}
+        if: github.actor != env.GHA_ACCESS_USER
